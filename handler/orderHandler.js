@@ -1,16 +1,22 @@
 const orderService = require('../domain/usecase/orderService');
 
-// Create a new order
+// Create order
 const createOrder = async (req, res) => {
-    const orderData = req.body;
-    orderData["created_by"] = req.user.userId;
     try {
-        const createdOrder = await orderService.createOrder({ orderData });
+
+        const orderData = req.body;
+
+        if (!Array.isArray(orderData.order_items) || orderData.order_items.length === 0) {
+            throw new Error('Order items are required');
+        }
+        const createdOrder = await orderService.createOrder(orderData);
         res.status(201).json({ message: "Order created successfully", orderId: createdOrder.order_id });
     } catch (error) {
+        console.error('Failed to create order:', error.message);
         res.status(500).json({ error: 'Internal Server Error', message: error.message });
     }
-}
+};
+
 
 // Get all orders
 const getAllOrders = async (req, res) => {
