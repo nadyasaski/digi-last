@@ -1,10 +1,7 @@
-//////////////////////////////////
-
-
-const jwt = require('jsonwebtoken'); // Ensure you have required the jwt module
+const jwt = require('jsonwebtoken');
 
 const verifyToken = (req, res, next) => {
-    const token = req.headers.authorization?.split(' ')[1]; // Assumes "Bearer TOKEN" format
+    const token = req.headers.authorization?.split(' ')[1];
 
     if (!token) {
         return res.status(401).json({ error: 'Unauthorized', message: 'Token is required' });
@@ -12,7 +9,6 @@ const verifyToken = (req, res, next) => {
 
     jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
         if (err) {
-            // Check if the error is because the token has expired
             if (err.name === 'TokenExpiredError') {
                 return res.status(401).json({ error: 'Unauthorized', message: 'Token is required' });
             }

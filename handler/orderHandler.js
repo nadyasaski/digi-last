@@ -3,9 +3,7 @@ const orderService = require('../domain/usecase/orderService');
 // Create order
 const createOrder = async (req, res) => {
     try {
-
         const orderData = req.body;
-
         if (!Array.isArray(orderData.order_items) || orderData.order_items.length === 0) {
             throw new Error('Order items are required');
         }

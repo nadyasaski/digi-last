@@ -42,7 +42,6 @@ const login = async (payload) => {
 };
 
 const createUser = async ({ name, email, password }) => {
-    // Basic validation for user input
     if (!name || !email || !password) {
         throw new Error('User must have a name, email, and password');
     }
@@ -53,8 +52,6 @@ const createUser = async ({ name, email, password }) => {
     const hashedPassword = await bcrypt.hash(password, 10);
     return await userRepo.addUser({ name, email, password: hashedPassword });
 };
-
-
 
 const updateUser = async (id, userData) => {
     const existingUser = await userRepo.getUserById(id);

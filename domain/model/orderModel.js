@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const Customer = require('./customerModel'); // Import the Customer model
+const Customer = require('./customerModel');
 
 const orderItemSchema = new mongoose.Schema({
     item_id: {
